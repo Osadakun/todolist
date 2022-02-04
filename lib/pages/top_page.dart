@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/model/task.dart';
+import 'package:todoapp/pages/add_task_page.dart';
 import 'package:todoapp/pages/done_task_page.dart';
 import 'package:todoapp/pages/undone_task_page.dart';
 
@@ -14,7 +15,11 @@ class TopPage extends StatefulWidget {
 
 class _TopPageState extends State<TopPage> {
   List<Task> undoneTaskList = [
-    Task(title: '宿題', isDone: false, createdTime: DateTime.now(), updatedTime: null),
+    Task(
+        title: '宿題',
+        isDone: false,
+        createdTime: DateTime.now(),
+        updatedTime: null),
     Task(title: '買い出し', isDone: false, createdTime: DateTime.now())
   ];
 
@@ -30,7 +35,13 @@ class _TopPageState extends State<TopPage> {
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          showUndoneTaskPage ? UndoneTaskPage(undoneTaskList: undoneTaskList, doneTaskList: doneTaskList,) : DoneTaskPage(undoneTaskList: undoneTaskList, doneTaskList: doneTaskList),
+          showUndoneTaskPage
+              ? UndoneTaskPage(
+                  undoneTaskList: undoneTaskList,
+                  doneTaskList: doneTaskList,
+                )
+              : DoneTaskPage(
+                  undoneTaskList: undoneTaskList, doneTaskList: doneTaskList),
           Row(
             children: [
               Expanded(
@@ -52,8 +63,7 @@ class _TopPageState extends State<TopPage> {
                 child: InkWell(
                   onTap: () {
                     showUndoneTaskPage = false;
-                    setState(() {
-                    });
+                    setState(() {});
                   },
                   child: Container(
                     alignment: Alignment.center,
@@ -69,7 +79,10 @@ class _TopPageState extends State<TopPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => AddTaskPage()));
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
