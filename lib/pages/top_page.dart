@@ -3,6 +3,7 @@ import 'package:todoapp/model/task.dart';
 import 'package:todoapp/pages/add_task_page.dart';
 import 'package:todoapp/pages/done_task_page.dart';
 import 'package:todoapp/pages/undone_task_page.dart';
+import 'package:todoapp/pages/add_task_page.dart';
 
 class TopPage extends StatefulWidget {
   const TopPage({Key? key, required this.title}) : super(key: key);
@@ -79,9 +80,9 @@ class _TopPageState extends State<TopPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AddTaskPage()));
+        onPressed: () async {
+          await Navigator.push(context, MaterialPageRoute(builder: (context) => AddTaskPage(undoneTaskList: undoneTaskList)));
+          setState(() {});
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
