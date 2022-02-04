@@ -26,6 +26,30 @@ class _DoneTaskPageState extends State<DoneTaskPage> {
             widget.doneTaskList.removeAt(index);
             setState(() {});
           },
+        secondary: IconButton(
+            icon: Icon(Icons.more_horiz),
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ListTile(
+                          title: Text('編集'),
+                          leading: Icon(Icons.edit),
+                          onTap: () {},
+                        ),
+                        ListTile(
+                          title: Text('削除'),
+                          leading: Icon(Icons.delete),
+                          onTap: () {},
+                        ),
+                      ],
+                    );
+                  });
+            },
+          ),
         );
       },
       itemCount: widget.doneTaskList.length,
