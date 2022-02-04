@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/model/task.dart';
+import 'package:todoapp/pages/done_task_page.dart';
+import 'package:todoapp/pages/undone_task_page.dart';
 
 class TopPage extends StatefulWidget {
   const TopPage({Key? key, required this.title}) : super(key: key);
@@ -20,6 +22,8 @@ class _TopPageState extends State<TopPage> {
     Task(title: '買い出し', isDone: false, createdTime: DateTime.now())
   ];
 
+  bool showUndonTaskPage = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,37 +33,53 @@ class _TopPageState extends State<TopPage> {
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          ListView.builder(
-            itemBuilder: (BuildContext context, int index) {
-              return CheckboxListTile(
-                controlAffinity: ListTileControlAffinity.leading,
-                title: Text(taskList[index].title),
-                value: taskList[index].isDone,
-                onChanged: (value) {
-                  taskList[index].isDone = !taskList[index].isDone;
-                  taskList.removeAt(index);
-                  setState(() {});
-                },
-              );
-            },
-            itemCount: taskList.length,
-          ),
+          showUndonTaskPage ? UndoneTaskPage() : DoneTaskPage(),
+          // ListView.builder(
+          //   itemBuilder: (BuildContext context, int index) {
+          //     return CheckboxListTile(
+          //       controlAffinity: ListTileControlAffinity.leading,
+          //       title: Text(taskList[index].title),
+          //       value: taskList[index].isDone,
+          //       onChanged: (value) {
+          //         taskList[index].isDone = !taskList[index].isDone;
+          //         taskList.removeAt(index);
+          //         setState(() {});
+          //       },
+          //     );
+          //   },
+          //   itemCount: taskList.length,
+          // ),
           Row(
             children: [
               Expanded(
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 50,
-                  color: Colors.redAccent,
-                  child: Text('未完了タスク', style: TextStyle(color: Colors.white, fontSize: 20)),
+                child: InkWell(
+                  onTap: () {
+                    showUndonTaskPage = true;
+                    setState(() {});
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 50,
+                    color: Colors.redAccent,
+                    child: Text('未完了タスク',
+                        style: TextStyle(color: Colors.white, fontSize: 20)),
+                  ),
                 ),
               ),
               Expanded(
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Text('完了タスク', style: TextStyle(color: Colors.white, fontSize: 20)),
-                  height: 50,
-                  color: Colors.greenAccent,
+                child: InkWell(
+                  onTap: () {
+                    showUndonTaskPage = false;
+                    setState(() {
+                    });
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Text('完了タスク',
+                        style: TextStyle(color: Colors.white, fontSize: 20)),
+                    height: 50,
+                    color: Colors.greenAccent,
+                  ),
                 ),
               ),
             ],
