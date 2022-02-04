@@ -26,7 +26,8 @@ class _UndoneTaskPageState extends State<UndoneTaskPage> {
           title: Text(widget.undoneTaskList[index].title),
           value: widget.undoneTaskList[index].isDone,
           onChanged: (value) {
-            widget.undoneTaskList[index].isDone = !widget.undoneTaskList[index].isDone;
+            widget.undoneTaskList[index].isDone =
+                !widget.undoneTaskList[index].isDone;
             widget.doneTaskList.add(widget.undoneTaskList[index]);
             widget.undoneTaskList.removeAt(index);
             setState(() {});
@@ -60,40 +61,65 @@ class _UndoneTaskPageState extends State<UndoneTaskPage> {
                                             child: TextField(
                                               controller: editTitleContoroller,
                                               decoration: InputDecoration(
-                                                border: OutlineInputBorder()
-                                              ),
+                                                  border: OutlineInputBorder()),
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.only(top: 30.0),
-                                            child: Container(
-                                              alignment: Alignment.center,
-                                              width: 200,
-                                              height: 30,
-                                              child: ElevatedButton(
-                                                onPressed: () {
-                                                  widget.undoneTaskList[index].title = editTitleContoroller.text;
-                                                  widget.undoneTaskList[index].updatedTime = DateTime.now();
-                                                  Navigator.pop(context);
-                                                  setState(() {
-                                                  });
-                                                },
-                                                child: Text('編集'),
-                                              ),
-                                            )
-                                          ),
+                                              padding: const EdgeInsets.only(
+                                                  top: 30.0),
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                width: 200,
+                                                height: 30,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    widget.undoneTaskList[index]
+                                                            .title =
+                                                        editTitleContoroller
+                                                            .text;
+                                                    widget.undoneTaskList[index]
+                                                            .updatedTime =
+                                                        DateTime.now();
+                                                    Navigator.pop(context);
+                                                    setState(() {});
+                                                  },
+                                                  child: Text('編集'),
+                                                ),
+                                              )),
                                         ],
                                       ),
                                     ),
                                   );
-                                }
-                            );
+                                });
                           },
                         ),
                         ListTile(
                           title: Text('削除'),
                           leading: Icon(Icons.delete),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pop(context);
+                            showDialog(context: context, builder: (context) {
+                              return AlertDialog(
+                                title: Text('${widget.undoneTaskList[index].title}を削除しますか？'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      widget.undoneTaskList.removeAt(index);
+                                      Navigator.pop(context);
+                                      setState(() {});
+                                    },
+                                    child: Text('はい')
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                  },
+                                    child: Text('キャンセル')
+                                  ),
+                                ],
+                              );
+                            });
+                          },
                         ),
                       ],
                     );

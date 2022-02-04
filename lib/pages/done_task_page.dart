@@ -90,7 +90,30 @@ class _DoneTaskPageState extends State<DoneTaskPage> {
                         ListTile(
                           title: Text('削除'),
                           leading: Icon(Icons.delete),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pop(context);
+                            showDialog(context: context, builder: (context) {
+                              return AlertDialog(
+                                title: Text('${widget.doneTaskList[index].title}を削除しますか？'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      widget.doneTaskList.removeAt(index);
+                                      Navigator.pop(context);
+                                      setState(() {});
+                                    },
+                                    child: Text('はい')
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                  },
+                                    child: Text('キャンセル')
+                                  ),
+                                ],
+                              );
+                            });
+                          },
                         ),
                       ],
                     );
