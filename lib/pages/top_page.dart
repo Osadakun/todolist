@@ -13,16 +13,13 @@ class TopPage extends StatefulWidget {
 }
 
 class _TopPageState extends State<TopPage> {
-  List<Task> taskList = [
-    Task(
-        title: '宿題',
-        isDone: false,
-        createdTime: DateTime.now(),
-        updatedTime: null),
+  List<Task> undoneTaskList = [
+    Task(title: '宿題', isDone: false, createdTime: DateTime.now(), updatedTime: null),
     Task(title: '買い出し', isDone: false, createdTime: DateTime.now())
   ];
 
-  bool showUndonTaskPage = true;
+  List<Task> doneTaskList = [];
+  bool showUndoneTaskPage = true;
 
   @override
   Widget build(BuildContext context) {
@@ -33,28 +30,13 @@ class _TopPageState extends State<TopPage> {
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          showUndonTaskPage ? UndoneTaskPage() : DoneTaskPage(),
-          // ListView.builder(
-          //   itemBuilder: (BuildContext context, int index) {
-          //     return CheckboxListTile(
-          //       controlAffinity: ListTileControlAffinity.leading,
-          //       title: Text(taskList[index].title),
-          //       value: taskList[index].isDone,
-          //       onChanged: (value) {
-          //         taskList[index].isDone = !taskList[index].isDone;
-          //         taskList.removeAt(index);
-          //         setState(() {});
-          //       },
-          //     );
-          //   },
-          //   itemCount: taskList.length,
-          // ),
+          showUndoneTaskPage ? UndoneTaskPage(undoneTaskList: undoneTaskList, doneTaskList: doneTaskList,) : DoneTaskPage(undoneTaskList: undoneTaskList, doneTaskList: doneTaskList),
           Row(
             children: [
               Expanded(
                 child: InkWell(
                   onTap: () {
-                    showUndonTaskPage = true;
+                    showUndoneTaskPage = true;
                     setState(() {});
                   },
                   child: Container(
@@ -69,7 +51,7 @@ class _TopPageState extends State<TopPage> {
               Expanded(
                 child: InkWell(
                   onTap: () {
-                    showUndonTaskPage = false;
+                    showUndoneTaskPage = false;
                     setState(() {
                     });
                   },
