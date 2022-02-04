@@ -46,16 +46,19 @@ class _DoneTaskPageState extends State<DoneTaskPage> {
                                 context: context,
                                 builder: (context) {
                                   return SimpleDialog(
+                                    titlePadding: EdgeInsets.all(20),
                                     title: Container(
                                       color: Colors.white,
                                       child: Column(
                                         children: [
-                                          Text('テキストを編集'),
+                                          Text('タイトルを編集'),
                                           Container(
                                             width: 500,
                                             child: TextField(
                                               decoration: InputDecoration(
-                                                  border: OutlineInputBorder()),
+                                                border: OutlineInputBorder()
+                                              ),
+                                            controller: editTitleContoroller,
                                             ),
                                           ),
                                           Padding(

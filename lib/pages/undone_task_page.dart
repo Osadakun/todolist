@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:todoapp/model/task.dart';
@@ -48,16 +49,19 @@ class _UndoneTaskPageState extends State<UndoneTaskPage> {
                                 context: context,
                                 builder: (context) {
                                   return SimpleDialog(
+                                    titlePadding: EdgeInsets.all(20),
                                     title: Container(
                                       color: Colors.white,
                                       child: Column(
                                         children: [
-                                          Text('テキストを編集'),
+                                          Text('タイトルを編集'),
                                           Container(
                                             width: 500,
                                             child: TextField(
+                                              controller: editTitleContoroller,
                                               decoration: InputDecoration(
-                                                  border: OutlineInputBorder()),
+                                                border: OutlineInputBorder()
+                                              ),
                                             ),
                                           ),
                                           Padding(
