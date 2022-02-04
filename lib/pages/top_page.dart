@@ -29,6 +29,7 @@ class _TopPageState extends State<TopPage> {
       body: ListView.builder(
         itemBuilder: (BuildContext context, int index) {
           return CheckboxListTile(
+            controlAffinity: ListTileControlAffinity.leading,
             title: Text(taskList[index].title),
             value: taskList[index].isDone,
             onChanged: (value) {
