@@ -1,6 +1,4 @@
-import 'dart:io';
-import 'dart:math';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/model/task.dart';
 
@@ -17,6 +15,10 @@ class UndoneTaskPage extends StatefulWidget {
 class _UndoneTaskPageState extends State<UndoneTaskPage> {
   TextEditingController editTitleContoroller = TextEditingController();
 
+  List<Task> undoneTaskList = [];
+  Future<void> getUndoneTasks() async{
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -26,8 +28,7 @@ class _UndoneTaskPageState extends State<UndoneTaskPage> {
           title: Text(widget.undoneTaskList[index].title),
           value: widget.undoneTaskList[index].isDone,
           onChanged: (value) {
-            widget.undoneTaskList[index].isDone =
-                !widget.undoneTaskList[index].isDone;
+            widget.undoneTaskList[index].isDone = !widget.undoneTaskList[index].isDone;
             widget.doneTaskList.add(widget.undoneTaskList[index]);
             widget.undoneTaskList.removeAt(index);
             setState(() {});
@@ -98,27 +99,29 @@ class _UndoneTaskPageState extends State<UndoneTaskPage> {
                           leading: Icon(Icons.delete),
                           onTap: () {
                             Navigator.pop(context);
-                            showDialog(context: context, builder: (context) {
-                              return AlertDialog(
-                                title: Text('${widget.undoneTaskList[index].title}を削除しますか？'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      widget.undoneTaskList.removeAt(index);
-                                      Navigator.pop(context);
-                                      setState(() {});
-                                    },
-                                    child: Text('はい')
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                  },
-                                    child: Text('キャンセル')
-                                  ),
-                                ],
-                              );
-                            });
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                        '${widget.undoneTaskList[index].title}を削除しますか？'),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            widget.undoneTaskList
+                                                .removeAt(index);
+                                            Navigator.pop(context);
+                                            setState(() {});
+                                          },
+                                          child: Text('はい')),
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('キャンセル')),
+                                    ],
+                                  );
+                                });
                           },
                         ),
                       ],

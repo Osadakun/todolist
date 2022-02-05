@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/model/task.dart';
 
@@ -43,7 +44,11 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           isDone: false,
                           createdTime: DateTime.now()
                         );
-                        widget.undoneTaskList.add(newTask);
+                        FirebaseFirestore.instance.collection('task').doc().set({
+                          'title': newTask.title,
+                          'is_done': newTask.isDone,
+                          'created_at': newTask.createdTime});
+                        // widget.undoneTaskList.add(newTask);
                         Navigator.pop(context);
                       },
                       child: Text('追加')
