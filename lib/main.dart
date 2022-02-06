@@ -21,5 +21,5 @@ class MyApp extends StatelessWidget {
       ),
       home: const TopPage(title: 'Flutter Demo Home Page'),
     );
-    }
+  }
 }
