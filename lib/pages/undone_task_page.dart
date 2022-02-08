@@ -16,8 +16,7 @@ class _UndoneTaskPageState extends State<UndoneTaskPage> {
   TextEditingController editTitleContoroller = TextEditingController();
 
   List<Task> undoneTaskList = [];
-  Future<void> getUndoneTasks() async{
-  }
+  // Future<void> getUndoneTasks() async{}
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +24,9 @@ class _UndoneTaskPageState extends State<UndoneTaskPage> {
       itemBuilder: (BuildContext context, int index) {
         return CheckboxListTile(
           controlAffinity: ListTileControlAffinity.leading,
-          title: Text(widget.undoneTaskList[index].title),
+          title: Text(widget.undoneTaskList[index].items),
           value: widget.undoneTaskList[index].isDone,
           onChanged: (value) {
-            widget.undoneTaskList[index].isDone = !widget.undoneTaskList[index].isDone;
-            widget.doneTaskList.add(widget.undoneTaskList[index]);
             widget.undoneTaskList.removeAt(index);
             setState(() {});
           },
