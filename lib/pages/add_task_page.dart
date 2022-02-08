@@ -48,11 +48,17 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           'title': newTask.title,
                           'is_done': newTask.isDone,
                           'created_at': newTask.createdTime});
-                        FirebaseFirestore.instance.collection('users').snapshots().listen((QuerySnapshot snapshot) {
+                        FirebaseFirestore.instance.collection('task').snapshots().listen((QuerySnapshot snapshot) {
                           snapshot.docs.forEach((doc) {
-                            print("----------------------");
-                            print(doc.get('title'));
-                            // widget.undoneTaskList.add(doc.get('name'));
+                            DateTime times = doc.get('created_at').toDate();
+                            Task newTask2 = Task(
+                              title: doc.get('title'),
+                              isDone: doc.get('is_done'),
+                              createdTime: times
+                            );
+                            // print(newTask.createdTime);
+                            // print(newTask2.createdTime);
+                            widget.undoneTaskList.add(newTask2);
                           });
                         });
                         // widget.undoneTaskList.add(newTask);
