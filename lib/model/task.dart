@@ -1,8 +1,10 @@
-class Task {
-  String title;
-  bool isDone;
-  DateTime? createdTime;
-  DateTime? updatedTime;
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
-  Task({required this.title, this.isDone = false, this.createdTime, this.updatedTime});
+class Task {
+  List<String> items;     // メモ内容を複数持てるように
+  bool isDone;            // 完了したかどうか
+  Position address;       // 位置情報
+
+  Task({required this.items, this.isDone = false, required this.address});
 }

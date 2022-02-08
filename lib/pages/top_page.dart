@@ -55,7 +55,7 @@ class _TopPageState extends State<TopPage> {
                     alignment: Alignment.center,
                     height: 50,
                     color: Colors.redAccent,
-                    child: Text('未完了タスク',
+                    child: Text('メモ',
                         style: TextStyle(color: Colors.white, fontSize: 20)),
                   ),
                 ),
@@ -68,7 +68,7 @@ class _TopPageState extends State<TopPage> {
                   },
                   child: Container(
                     alignment: Alignment.center,
-                    child: Text('完了タスク',
+                    child: Text('メモの登録',
                         style: TextStyle(color: Colors.white, fontSize: 20)),
                     height: 50,
                     color: Colors.greenAccent,
