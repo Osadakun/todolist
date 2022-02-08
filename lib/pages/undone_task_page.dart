@@ -108,8 +108,7 @@ class _UndoneTaskPageState extends State<UndoneTaskPage> {
                                     actions: [
                                       TextButton(
                                           onPressed: () {
-                                            widget.undoneTaskList
-                                                .removeAt(index);
+                                            widget.undoneTaskList.removeAt(index);
                                             Navigator.pop(context);
                                             setState(() {});
                                           },

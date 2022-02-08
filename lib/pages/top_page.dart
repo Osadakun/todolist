@@ -16,12 +16,6 @@ class TopPage extends StatefulWidget {
 
 class _TopPageState extends State<TopPage> {
   List<Task> undoneTaskList = [
-    Task(
-        title: '宿題',
-        isDone: false,
-        createdTime: DateTime.now(),
-        updatedTime: null),
-    Task(title: '買い出し', isDone: false, createdTime: DateTime.now())
   ];
 
   List<Task> doneTaskList = [];

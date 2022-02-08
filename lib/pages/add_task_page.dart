@@ -44,10 +44,17 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           isDone: false,
                           createdTime: DateTime.now()
                         );
-                        FirebaseFirestore.instance.collection('task').doc().set({
+                        FirebaseFirestore.instance.collection('task').add({
                           'title': newTask.title,
                           'is_done': newTask.isDone,
                           'created_at': newTask.createdTime});
+                        FirebaseFirestore.instance.collection('users').snapshots().listen((QuerySnapshot snapshot) {
+                          snapshot.docs.forEach((doc) {
+                            print("----------------------");
+                            print(doc.get('title'));
+                            // widget.undoneTaskList.add(doc.get('name'));
+                          });
+                        });
                         // widget.undoneTaskList.add(newTask);
                         Navigator.pop(context);
                       },
