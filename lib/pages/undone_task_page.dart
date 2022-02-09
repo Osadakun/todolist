@@ -14,6 +14,7 @@ class UndoneTaskPage extends StatefulWidget {
 
 class _UndoneTaskPageState extends State<UndoneTaskPage> {
   TextEditingController editTitleContoroller = TextEditingController();
+  final _firebase = FirebaseFirestore.instance;
 
   List<Task> undoneTaskList = [];
   // Future<void> getUndoneTasks() async{}
@@ -24,105 +25,95 @@ class _UndoneTaskPageState extends State<UndoneTaskPage> {
       itemBuilder: (BuildContext context, int index) {
         return CheckboxListTile(
           controlAffinity: ListTileControlAffinity.leading,
-          title: Text(widget.undoneTaskList[index].items),
+          title: Text(widget.undoneTaskList[index].title),
           value: widget.undoneTaskList[index].isDone,
           onChanged: (value) {
-            widget.undoneTaskList.removeAt(index);
+            final id = _firebase.collection('task').where('title', isEqualTo: widget.undoneTaskList[index].title).get;
+            print(id);
             setState(() {});
           },
           secondary: IconButton(
             icon: Icon(Icons.more_horiz),
             onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ListTile(
-                          title: Text('編集'),
-                          leading: Icon(Icons.edit),
-                          onTap: () {
-                            Navigator.pop(context);
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return SimpleDialog(
-                                    titlePadding: EdgeInsets.all(20),
-                                    title: Container(
-                                      color: Colors.white,
-                                      child: Column(
-                                        children: [
-                                          Text('タイトルを編集'),
-                                          Container(
-                                            width: 500,
-                                            child: TextField(
-                                              controller: editTitleContoroller,
-                                              decoration: InputDecoration(
-                                                  border: OutlineInputBorder()),
-                                            ),
-                                          ),
-                                          Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 30.0),
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                width: 200,
-                                                height: 30,
-                                                child: ElevatedButton(
-                                                  onPressed: () {
-                                                    widget.undoneTaskList[index]
-                                                            .title =
-                                                        editTitleContoroller
-                                                            .text;
-                                                    widget.undoneTaskList[index]
-                                                            .updatedTime =
-                                                        DateTime.now();
-                                                    Navigator.pop(context);
-                                                    setState(() {});
-                                                  },
-                                                  child: Text('編集'),
-                                                ),
-                                              )),
-                                        ],
-                                      ),
+              showModalBottomSheet(context: context, builder: (context) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ListTile(
+                      title: Text('編集'),
+                      leading: Icon(Icons.edit),
+                      onTap: () {
+                        Navigator.pop(context);
+                        showDialog(context: context, builder: (context) {
+                          return SimpleDialog(
+                            titlePadding: EdgeInsets.all(20),
+                            title: Container(
+                              color: Colors.white,
+                              child: Column(
+                                children: [
+                                  Text('タイトルを編集'),
+                                  Container(
+                                    width: 500,
+                                    child: TextField(
+                                      controller: editTitleContoroller,
+                                      decoration: InputDecoration(
+                                          border: OutlineInputBorder()),
                                     ),
-                                  );
-                                });
-                          },
-                        ),
-                        ListTile(
-                          title: Text('削除'),
-                          leading: Icon(Icons.delete),
-                          onTap: () {
-                            Navigator.pop(context);
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text(
-                                        '${widget.undoneTaskList[index].title}を削除しますか？'),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () {
-                                            widget.undoneTaskList.removeAt(index);
-                                            Navigator.pop(context);
-                                            setState(() {});
-                                          },
-                                          child: Text('はい')),
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('キャンセル')),
-                                    ],
-                                  );
-                                });
-                          },
-                        ),
-                      ],
-                    );
-                  });
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 30.0),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      width: 200,
+                                      height: 30,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          widget.undoneTaskList[index].title = editTitleContoroller.text;
+                                          Navigator.pop(context);
+                                          setState(() {});
+                                        },
+                                        child: Text('編集'),
+                                      ),
+                                    )
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                      },
+                    ),
+                    ListTile(
+                      title: Text('削除'),
+                      leading: Icon(Icons.delete),
+                      onTap: () {
+                        Navigator.pop(context);
+                        showDialog(context: context, builder: (context) {
+                          return AlertDialog(
+                            title: Text('${widget.undoneTaskList[index].title}を削除しますか？'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  widget.undoneTaskList.removeAt(index);
+                                  Navigator.pop(context);
+                                  setState(() {});
+                                },
+                                child: Text('はい')),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('キャンセル')
+                              ),
+                            ],
+                          );
+                        });
+                      },
+                    ),
+                  ],
+                );
+              });
             },
           ),
         );

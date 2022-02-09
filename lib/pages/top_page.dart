@@ -16,12 +16,6 @@ class TopPage extends StatefulWidget {
 
 class _TopPageState extends State<TopPage> {
   List<Task> undoneTaskList = [
-    Task(
-        title: '宿題',
-        isDone: false,
-        createdTime: DateTime.now(),
-        updatedTime: null),
-    Task(title: '買い出し', isDone: false, createdTime: DateTime.now())
   ];
 
   List<Task> doneTaskList = [];
@@ -36,13 +30,8 @@ class _TopPageState extends State<TopPage> {
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          showUndoneTaskPage
-              ? UndoneTaskPage(
-                  undoneTaskList: undoneTaskList,
-                  doneTaskList: doneTaskList,
-                )
-              : DoneTaskPage(
-                  undoneTaskList: undoneTaskList, doneTaskList: doneTaskList),
+          showUndoneTaskPage ? UndoneTaskPage(undoneTaskList: undoneTaskList, doneTaskList: doneTaskList,)
+            : DoneTaskPage(undoneTaskList: undoneTaskList, doneTaskList: doneTaskList),               // 三項演算子が使われている
           Row(
             children: [
               Expanded(
@@ -56,7 +45,7 @@ class _TopPageState extends State<TopPage> {
                     height: 50,
                     color: Colors.redAccent,
                     child: Text('メモ',
-                        style: TextStyle(color: Colors.white, fontSize: 20)),
+                    style: TextStyle(color: Colors.white, fontSize: 20)),
                   ),
                 ),
               ),
@@ -69,7 +58,7 @@ class _TopPageState extends State<TopPage> {
                   child: Container(
                     alignment: Alignment.center,
                     child: Text('メモの登録',
-                        style: TextStyle(color: Colors.white, fontSize: 20)),
+                    style: TextStyle(color: Colors.white, fontSize: 20)),
                     height: 50,
                     color: Colors.greenAccent,
                   ),

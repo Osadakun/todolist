@@ -29,100 +29,95 @@ class _DoneTaskPageState extends State<DoneTaskPage> {
             setState(() {});
           },
         secondary: IconButton(
-            icon: Icon(Icons.more_horiz),
-            onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ListTile(
-                          title: Text('編集'),
-                          leading: Icon(Icons.edit),
-                          onTap: () {
-                            Navigator.pop(context);
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return SimpleDialog(
-                                    titlePadding: EdgeInsets.all(20),
-                                    title: Container(
-                                      color: Colors.white,
-                                      child: Column(
-                                        children: [
-                                          Text('タイトルを編集'),
-                                          Container(
-                                            width: 500,
-                                            child: TextField(
-                                              decoration: InputDecoration(
-                                                border: OutlineInputBorder()
-                                              ),
-                                            controller: editTitleContoroller,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(top: 30.0),
-                                            child: Container(
-                                              alignment: Alignment.center,
-                                              width: 200,
-                                              height: 30,
-                                              child: ElevatedButton(
-                                                onPressed: () {
-                                                  widget.doneTaskList[index].title = editTitleContoroller.text;
-                                                  widget.doneTaskList[index].updatedTime = DateTime.now();
-                                                  Navigator.pop(context);
-                                                  setState(() {
-                                                  });
-                                                },
-                                                child: Text('編集'),
-                                              ),
-                                            )
-                                          ),
-                                        ],
-                                      ),
+          icon: Icon(Icons.more_horiz),
+          onPressed: () {
+            showModalBottomSheet(context: context, builder: (context) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListTile(
+                    title: Text('編集'),
+                    leading: Icon(Icons.edit),
+                    onTap: () {
+                      Navigator.pop(context);
+                      showDialog(context: context, builder: (context) {
+                        return SimpleDialog(
+                          titlePadding: EdgeInsets.all(20),
+                          title: Container(
+                            color: Colors.white,
+                            child: Column(
+                              children: [
+                                Text('タイトルを編集'),
+                                Container(
+                                  width: 500,
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder()
                                     ),
-                                  );
-                                }
-                            );
-                          },
-                        ),
-                        ListTile(
-                          title: Text('削除'),
-                          leading: Icon(Icons.delete),
-                          onTap: () {
-                            Navigator.pop(context);
-                            showDialog(context: context, builder: (context) {
-                              return AlertDialog(
-                                title: Text('${widget.doneTaskList[index].title}を削除しますか？'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      widget.doneTaskList.removeAt(index);
-                                      Navigator.pop(context);
-                                      setState(() {});
-                                    },
-                                    child: Text('はい')
+                                  controller: editTitleContoroller,
                                   ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                  },
-                                    child: Text('キャンセル')
-                                  ),
-                                ],
-                              );
-                            });
-                          },
-                        ),
-                      ],
-                    );
-                  });
-            },
-          ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 30.0),
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    width: 200,
+                                    height: 30,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        widget.doneTaskList[index].title = editTitleContoroller.text;
+                                        widget.doneTaskList[index].updatedTime = DateTime.now();
+                                        Navigator.pop(context);
+                                        setState(() {
+                                        });
+                                      },
+                                    child: Text('編集'),
+                                    ),
+                                  )
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      });
+                    },
+                  ),
+                  ListTile(
+                    title: Text('削除'),
+                    leading: Icon(Icons.delete),
+                    onTap: () {
+                      Navigator.pop(context);
+                      showDialog(context: context, builder: (context) {
+                        return AlertDialog(
+                          title: Text('${widget.doneTaskList[index].title}を削除しますか？'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                widget.doneTaskList.removeAt(index);
+                                Navigator.pop(context);
+                                setState(() {});
+                              },
+                              child: Text('はい')
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                            },
+                              child: Text('キャンセル')
+                            ),
+                          ],
+                        );
+                      });
+                    },
+                  ),
+                ],
+              );
+            });
+          },
+        ),
         );
       },
-      itemCount: widget.doneTaskList.length,
+    itemCount: widget.doneTaskList.length,
     );
   }
 }
